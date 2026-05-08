@@ -15,8 +15,9 @@ class LiveJokeViewModel : ViewModel() {
     private val _joke = MutableStateFlow<LiveJokeResponse?>(null)
     val joke: StateFlow<LiveJokeResponse?> = _joke
 
-    private val refreshIntervalMs = TimeUnit.SECONDS.toMillis(2) // Refresh every 10 seconds
+    private val refreshIntervalMs = TimeUnit.SECONDS.toMillis(30)
     private var isUpdating = false
+    private var currentCategory: String = "Any"
 
     init {
         startJokeUpdates()
@@ -25,36 +26,40 @@ class LiveJokeViewModel : ViewModel() {
     private fun startJokeUpdates() {
         viewModelScope.launch {
             while (true) {
-                fetchJokeInternal()
+                fetchJokeInternal(currentCategory)
                 delay(refreshIntervalMs)
             }
         }
     }
 
-    fun fetchJoke() {
+    fun fetchJoke(category: String = "Any") {
+        currentCategory = mapToApiCategory(category)
         viewModelScope.launch {
-            fetchJokeInternal()
+            fetchJokeInternal(currentCategory)
         }
     }
 
-    private suspend fun fetchJokeInternal() {
+    private fun mapToApiCategory(userCategory: String): String {
+        return when (userCategory) {
+            "Puns" -> "Pun"
+            "Dark humor" -> "Dark"
+            "All" -> "Any"
+            else -> "Any" // Default to Any if no perfect mapping
+        }
+    }
+
+    private suspend fun fetchJokeInternal(category: String) {
         if (isUpdating) {
-            return // Prevent concurrent updates
+            return
         }
         isUpdating = true
         try {
-            val response = RetrofitInstance.api.getRandomJoke()
+            val response = RetrofitInstance.api.getRandomJoke(category)
             _joke.value = response.copy(timestamp = System.currentTimeMillis())
         } catch (e: Exception) {
             e.printStackTrace()
-            // Consider emitting an error state to the UI if needed
         } finally {
             isUpdating = false
         }
-    }
-
-    override fun onCleared() {
-        // Any cleanup if needed
-        super.onCleared()
     }
 }
