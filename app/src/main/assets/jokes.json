@@ -275,5 +275,7 @@
   { "setup": "What is so fragile that saying its name breaks it?", "punchline": "Silence.", "category": "Riddles" },
   { "setup": "I have cities, but no houses. I have mountains, but no trees. I have water, but no fish. What am I?", "punchline": "A map.", "category": "Riddles" },
   { "setup": "What has many teeth but can’t bite?", "punchline": "A comb.", "category": "Riddles" },
-  { "setup": "What has a thumb and four fingers but is not alive?", "punchline": "A glove.", "category": "Riddles" }
+  { "setup": "What has a thumb and four fingers but is not alive?", "punchline": "A glove.", "category": "Riddles" },
+  { "setup": "Mwalimu: Kwa nini umekuja shule umechelewa?", "punchline": "Mwanafunzi: Kibao kimesema, 'Punguza mwendo, mbele kuna shule!'", "category": "One-liners", "lang": "sw" },
+  { "setup": "Kwa nini kuku alivuka barabara?", "punchline": "Ili kufika upande wa pili... bila kugongwa na boda boda!", "category": "One-liners", "lang": "sw" }
 ]

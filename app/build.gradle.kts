@@ -69,4 +69,7 @@ dependencies {
     
     // Navigation
     implementation(libs.androidx.navigation.compose)
+
+    // AI
+    implementation(libs.google.generativeai)
 }
